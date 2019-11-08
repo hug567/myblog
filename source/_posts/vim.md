@@ -37,6 +37,8 @@ y                                //复制
 p                                //粘贴
 ^ / HOME                         //选中光标至行首
 $ / END                          //选中光标至行尾
+ggyG                             //全部复制进默认寄存器
+:n1,n2d                          //删除n1-n2行内容
 ```
 
 ### 3）、跳转翻页：
@@ -97,7 +99,7 @@ shift + *                        //搜索单词
 .*\[]^$                          //需转移字符
 ```
 
-### 7）、显示设置：
+### 7）、显示比较：
 
 ```C
 :set nu                          //显示行号
@@ -107,11 +109,27 @@ shift + *                        //搜索单词
 :noh                             //退出搜索高亮
 :source ~/.vimrc                 //更新配置文件
 :hi / :highlight                 //查看当前颜色配置
+:f / Ctrl + G                    //查看文件名
+:pwd                             //查看父目录
+:diffthis                        //比较文件，在打开的两个文件中分别执行
 ```
 
 ### 8）、多行注释：
-
-
+```C
+//-----多行注释---------//
+ESC                              //退出至常规模式，光标放在行首
+Ctrl + V                         //进入VISUAL BLOCK模式
+nj                               //选中光标往下n行
+Shift + I                        //进入插入模式
+//、#                            //输入注释符
+ESC                              //退出(等一会)
+//-----取消多行注释-----//
+ESC                              //退出至常规模式，光标放在行首
+Ctrl + V                         //进入VISUAL BLOCK模式
+nj                               //选中光标往下n行
+x或d                             //按块删除
+ESC                              //退出
+```
 
 ## 2、vim中使用正则表达式：
 
@@ -158,7 +176,7 @@ filetype plugin indent on
 ### 2）、NERDTree：显示目录树
 
 ```C
- //地址：https://github.com/scrooloose/nerdtree
+//地址：https://github.com/scrooloose/nerdtree
 cd ~/.vim/bundle                                    //进入vim插件目录
 git clone git@github.com:scrooloose/nerdtree.git    //下载NERDTree
 //使用：在目录树中操作节点
@@ -189,4 +207,31 @@ cp taglist.vim ~/.vim/pugin                             //复制taglist.vim
 //下载：https://github.com/ervandew/supertab
 cd ~/.vim/bundle	                                //进入目录
 git clone git@github.com:ervandew/supertab.git          //下载supertab
+```
+
+### 5）astyle：格式化代码
+
+```C
+sudo apt install astyle          //安装astyle
+astyle --version                 //查看astyle版本
+:%!astyle --style=kr             //格式化当前文件
+:1,40!astyle --style=kr          //格式化指定区域
+```
+
+### 6）ctags：函数跳转
+
+```C
+sudo apt install ctags           //安装ctags
+ctags --version                  //查看ctags版本
+ctags -R *                       //递归生产tags文件
+Ctrl + ]                         //(vim中)跳转至定义
+Ctrl + T                         //(vim中)返回
+```
+
+## 5、下载配色主题：
+
+```C
+//下载：[http://www.easycolor.cc/](http://www.easycolor.cc/)
+cd ~/.vim/colors                 //放入指定目录(molokai.vim)
+colorscheme molokai              //在~/.vimrc中设置
 ```
