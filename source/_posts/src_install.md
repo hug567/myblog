@@ -5,11 +5,11 @@ sudo apt install libffi-dev zlib1g-dev                   //安装依赖
 https://ftp.gnome.org/pub/gnome/sources/glib/2.40/       //下载glib-2.40
 tar -xvf glib-2.40.0.tar.xz                              //解压
 cd glib-2.40.0                                           //进入目录
-./configure                                              //默认配置
 vim glib/gdate.c                                         //编辑-2.40.0源码
 #pragma GCC diagnostic push                              //2442行增加
 #pragma GCC diagnostic ignored "-Wformat-nonliteral"     //2443行增加
 #pragma GCC diagnostic pop                               //2554尾行增加
+./configure                                              //默认配置
 make                                                     //编译
 sudo make install                                        //安装
 ```
@@ -26,7 +26,7 @@ mkdir build && cd build                                  //新建build目录并�
 make                                                     //编译
 sudo make install                                        //安装
 qemu-img --version                                       //查看qemu版本
-/usr/local/bin
+/usr/local/bin                                           //qemu install location
 
 
 
