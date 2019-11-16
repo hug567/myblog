@@ -1,8 +1,9 @@
 ## 1、配置源镜像：
+
 ```c
-cd /etc/apt
-sudo mv sources.list sources.list-ubuntu
-sudo gedit sources.list
+cd /etc/apt                                              //进入目录
+sudo mv sources.list sources.list-ubuntu                 //备份源镜像
+sudo gedit sources.list                                  //新建源镜像
 deb http://mirrors.cloud.tencent.com/ubuntu/ bionic main universe restricted multiverse
 deb http://mirrors.cloud.tencent.com/ubuntu/ bionic-security main universe restricted multiverse
 deb http://mirrors.cloud.tencent.com/ubuntu/ bionic-updates main universe restricted multiverse
@@ -11,8 +12,8 @@ deb-src http://mirrors.cloud.tencent.com/ubuntu/ bionic main universe restricted
 deb-src http://mirrors.cloud.tencent.com/ubuntu/ bionic-security main universe restricted multiverse
 deb-src http://mirrors.cloud.tencent.com/ubuntu/ bionic-updates main universe restricted multiverse
 deb-src http://mirrors.cloud.tencent.com/ubuntu/ bionic-backports main universe restricted multiverse
-sudo apt update
-sudo apt upgrade
+sudo apt update                                          //更新源镜像
+sudo apt upgrade                                         //更新软件
 ```
 ##  2、安装软件：
 ```C
@@ -39,7 +40,7 @@ cat ~/.ssh/id_rsa.pub                                    //查看SSH Key
  ## 4、下载配置文件：
 ```C
 git clone git@github.com:hug567/myconfigure.git          //下载配置仓库
-cp -a ... ~                                              //负载配置文件
+cp -a <...> ~                                            //复制配置文件
 ```
 
 ## 5、windows下Git Bash配置：
