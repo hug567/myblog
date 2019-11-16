@@ -37,7 +37,7 @@ git config --global user.email huangxing567@163.com      //设置邮箱
 ssh-keygen -t rsa -C "huangxing567@163.com"              //配置SSH Key
 cat ~/.ssh/id_rsa.pub                                    //查看SSH Key
 ```
- ## 4、下载配置文件：
+## 4、下载配置文件：
 ```C
 git clone git@github.com:hug567/myconfigure.git          //下载配置仓库
 cp -a <...> ~                                            //复制配置文件
@@ -52,5 +52,9 @@ cp -a <...> ~                                            //复制配置文件
 
 ```
 
+## 6、Ubuntu 18.04 install sougou：
 
+```c
+
+```
 
