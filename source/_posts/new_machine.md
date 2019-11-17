@@ -55,48 +55,28 @@ cp -a <...> ~                                            //复制配置文件
 
 ```
 
-### 6、Ubuntu 18.04安装搜狗输入法：
+### 6、Ubuntu 18.04配置：
 
+#### 1)、安装搜狗输入法
 ```c
 sudo apt install fcitx                                   //安装fcitx
 https://pinyin.sogou.com/linux/?r=pinyin                 //下载
 sudo dpkg -i sogoupinyin_2.3.1.0112_amd64.deb            //安装(或双击)
 Settings -> Region & Lanauage -> Manage Installed Languages  //设置
-->  Keyboard input method ststem: fcitx
--> Apply System-Wide -> 重启
--> 桌面右上角键盘图标 -> Configure Current Input Method
--> 左下角"+"图标 -> Search Input Method -> sogou -> OK
--> 将Sogou Pinyin移至第一位
+->  Keyboard input method ststem: fcitx                      //设置
+-> Apply System-Wide -> 重启                                 //设置
+-> 桌面右上角键盘图标 -> Configure Current Input Method      //设置
+-> 左下角"+"图标 -> Search Input Method -> sogou -> OK       //设置
+-> 将Sogou Pinyin移至第一位                                  //设置
+
 //问题：输入法候选栏中文乱码
-cd ~/.config
-rm -rf Sogou* sogou*
+cd ~/.config                                             //进入配置目录
+rm -rf Sogou* sogou*                                     //删除搜狗配置文件
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#### 2)、取消锁屏
+```c
+Settings -> Power -> Blank screen -> Never               //取消锁屏
+```
 
 
