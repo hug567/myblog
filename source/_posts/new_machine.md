@@ -1,4 +1,4 @@
-## 1、配置源镜像：
+### 1、配置源镜像：
 
 ```c
 cd /etc/apt                                              //进入目录
@@ -15,7 +15,8 @@ deb-src http://mirrors.cloud.tencent.com/ubuntu/ bionic-backports main universe 
 sudo apt update                                          //更新源镜像
 sudo apt upgrade                                         //更新软件
 ```
-##  2、安装软件：
+###  2、安装软件：
+
 ```C
 sudo apt install vim vim-gnome git tmux zsh gcc g++ \
      make cmake python python3                           //安装软件
@@ -30,20 +31,22 @@ cmake --version                                          //查看cmake版本
 python --version                                         //查看python版本
 python3 --version                                        //查看python3版本
 ```
-## 3、配置GitHub：
+### 3、配置GitHub：
+
 ```C
 git config --global user.name "Huang Xing"               //设置用户名
 git config --global user.email huangxing567@163.com      //设置邮箱
 ssh-keygen -t rsa -C "huangxing567@163.com"              //配置SSH Key
 cat ~/.ssh/id_rsa.pub                                    //查看SSH Key
 ```
-## 4、下载配置文件：
+### 4、下载配置文件：
+
 ```C
 git clone git@github.com:hug567/myconfigure.git          //下载配置仓库
 cp -a <...> ~                                            //复制配置文件
 ```
 
-## 5、windows下Git Bash配置：
+### 5、windows下Git Bash配置：
 
 ```c
 //配置GitHub并下载mgconfigure仓库
@@ -52,9 +55,48 @@ cp -a <...> ~                                            //复制配置文件
 
 ```
 
-## 6、Ubuntu 18.04 install sougou：
+### 6、Ubuntu 18.04安装搜狗输入法：
 
 ```c
-
+sudo apt install fcitx                                   //安装fcitx
+https://pinyin.sogou.com/linux/?r=pinyin                 //下载
+sudo dpkg -i sogoupinyin_2.3.1.0112_amd64.deb            //安装(或双击)
+Settings -> Region & Lanauage -> Manage Installed Languages  //设置
+->  Keyboard input method ststem: fcitx
+-> Apply System-Wide -> 重启
+-> 桌面右上角键盘图标 -> Configure Current Input Method
+-> 左下角"+"图标 -> Search Input Method -> sogou -> OK
+-> 将Sogou Pinyin移至第一位
+//问题：输入法候选栏中文乱码
+cd ~/.config
+rm -rf Sogou* sogou*
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

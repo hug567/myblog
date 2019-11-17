@@ -1,4 +1,5 @@
 # Hexo笔记
+
 ```C
 hexo g / generate        //生成静态文件
 hexo s / server          //在本地服务器运行
