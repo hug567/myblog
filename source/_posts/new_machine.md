@@ -19,7 +19,7 @@ sudo apt upgrade                                         //更新软件
 
 ```C
 sudo apt install vim vim-gnome git tmux zsh gcc g++ \
-     make cmake python python3                           //安装软件
+     make cmake python python3 ctags                     //安装软件
 vim --version                                            //查看vim版本
 git --version                                            //查看git版本
 tmux -V                                                  //查看tmux版本
