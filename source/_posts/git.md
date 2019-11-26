@@ -24,3 +24,26 @@ git log --author="Huang Xing"
 //查看详细commit信息
 git log --oneline
 ```
+
+### 2.2、本地分支管理
+
+```C
+git branch                                               //查看本地所有分支
+git branch -vv                                           //查看本地分支关联的远端分支
+git branch dev --set-upstream-to=origin/dev              //设置本地分支关联远端分支
+git branch -a                                            //查看本地和远端所有分支
+git checkout -b dev                                      //新建并切换分支
+git checkout dev                                         //新建本地分支
+git branch dev                                           //切换本地分支
+git checkout -b dev origin/dev                           //新建本地分支并追踪远端
+git merge dev                                            //合并本地分支dev至当前分支
+git branch -d dev                                        //删除本地分支
+git branch -D dev                                        //强制删除本地分支
+git branch -m <newname>                                  //重命名当前分支
+//----------取回远端分支-----------------------------------------------------//
+git fetch origin master                                  //取回远端master分支至本地
+git log -p FETCH_HEAD                                    //查看取回的更新信息
+git diff master origin/master                            //比较本地分支与远端分支
+git rebase master                                        //线性合并取回的远端分支至当前分支
+//----------不commit切换分支-----------------------------------------------------//
+```
