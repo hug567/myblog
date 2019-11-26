@@ -17,4 +17,10 @@ cat ~/.ssh/id_rsa.pub                                    //查看SSH Key
 git log                                                  //查看提交日志
 git log --name-status                                    //log显示修改文件列表
 git show                                                 //查看最新commit详细修改
+git show <commitID>                                      //查看指定commit详细修改
+git show <commitID> <filename>                           //查看指定commit中某个文件详细修改
+//统计提交代码
+git log --author="Huang Xing"
+//查看详细commit信息
+git log --oneline
 ```
