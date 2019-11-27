@@ -1,4 +1,4 @@
-# Hexo笔记
+# Ubuntu服务器部署Hexo博客
 
 ```C
 hexo g / generate        //生成静态文件
@@ -8,13 +8,15 @@ hexo new article         //新建文章(source/_posts/artical.md)
 ```
 ## nginx
 ```C
-sudo service ngnix start      //启动Ngnix
-sudo service ngnix stop       //停止Ngnix
+sudo service nginx start      //启动Ngnix
+sudo service nginx stop       //停止Ngnix
 sudo service nginx restart    //重启Ngnix
 
 
-sudo apt install nodejs      //安装Node.js
-
+sudo apt install nginx nodejs npm     //安装Node.js
+nginx -v
+node -v
+npm -v
 
 
 ```
