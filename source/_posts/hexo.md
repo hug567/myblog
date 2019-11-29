@@ -1,22 +1,52 @@
 # Ubuntu服务器部署Hexo博客
 
+### 服务器配置
+
 ```C
-hexo g / generate        //生成静态文件
-hexo s / server          //在本地服务器运行
-hexo clean               //清除缓存
-hexo new article         //新建文章(source/_posts/artical.md)
+sudo apt install nginx nodejs npm                        //安装软件
+nginx -v                                                 //查看nginx版本
+node -v                                                  //查看node版本
+npm -v                                                   //查看npm版本
+sudo nmp install n -g                                    //安装更新版本工具N
+sudo n stable                                            //更新nodejs版本
+npm ls --depth 0         //查看hexo安装的插件
+sudo npm install -g hexo                                 //安装hexo
+sudo nom install -g hexo-cli
+sudo npm install hexo --save
+sudo npm install hexo-generator-archive --save
+sudo npm install hexo-generator-category --save
+sudo npm install hexo-generator-index --save
+sudo npm install hexo-generator-tag --save
+sudo npm install hexo-deployer-git --save
+
+
+
+
+
+sudo npm install hexo-server
+hexo -v                                                  //查看hexo版本
+
 ```
-## nginx
+
+### nginx操作
+
 ```C
+sudo nginx                                               //启动nginx，浏览器输入IP访问
+sudo vim /etc/nginx/sites-enabled/default       //
+root /home/ubuntu/code/myblog/public;          //43行修改为
+
 sudo service nginx start      //启动Ngnix
 sudo service nginx stop       //停止Ngnix
 sudo service nginx restart    //重启Ngnix
 
 
-sudo apt install nginx nodejs npm     //安装Node.js
-nginx -v
-node -v
-npm -v
+```
 
+### hexo操作
 
+```C
+hexo g / generate        //生成静态文件
+hexo s / server          //在本地服务器运行
+hexo clean               //清除缓存
+hexo new article         //新建文章(source/_posts/artical.md)
 ```
