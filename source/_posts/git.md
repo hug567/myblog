@@ -45,11 +45,24 @@ git fetch origin master                                  //取回远端master分
 git log -p FETCH_HEAD                                    //查看取回的更新信息
 git diff master origin/master                            //比较本地分支与远端分支
 git rebase master                                        //线性合并取回的远端分支至当前分支
-//----------不commit切换分支-----------------------------------------------------//
+//----------不commit切换分支-------------------------------------------------//
 git stash                                                //暂存未add更改
 git stash list                                           //查看暂存列表
 git chechout <branch2>                                   //切换分支
 git stash pop                                            //取出暂存
 git stash drop stash@{0}                                 //删除stash第一个队列
 git stash clear                                          //清空stash所有内容
+```
+
+### 2.3、远端分支管理
+
+```C
+git push origin HEAD:master                              //推送本地分支至远端
+git push origin HEAD:master -f                           //强制推送本地分支至远端
+git branch -r                                            //查看所有远端分支
+git push --delete origin <branch>                        //删除远端分支
+//----------重命名远端分支-------------------------------------------------//
+git push --delete origin <branch>                        //删除远端分支
+git branch -m <newname>                                  //重命名本地分支
+git push origin HEAD:<newname>                           //提送至远端分支
 ```
