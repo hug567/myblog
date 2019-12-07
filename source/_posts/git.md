@@ -20,7 +20,9 @@ git show                                                 //查看最新commit详
 git show <commitID>                                      //查看指定commit详细修改
 git show <commitID> <filename>                           //查看指定commit中某个文件详细修改
 //统计提交代码
-git log --author="Huang Xing"
+git log --author="Huang Xing" --pretty=tformat: --numstat | gawk \
+'{ add += $1: subs += $2: loc += $1 - $2} END \
+{printf "added lines: %s removed lines: %s total lines: %s\n", add, subs, loc }' -
 //查看详细commit信息
 git log --oneline
 ```
@@ -65,4 +67,9 @@ git push --delete origin <branch>                        //删除远端分支
 git push --delete origin <branch>                        //删除远端分支
 git branch -m <newname>                                  //重命名本地分支
 git push origin HEAD:<newname>                           //提送至远端分支
+```
+
+### 2.4、commit操作
+
+```C
 ```
