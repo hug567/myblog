@@ -117,6 +117,9 @@ shift + *                        //搜索单词
 :f / Ctrl + G                    //查看文件名
 :pwd                             //查看父目录
 :diffthis                        //比较文件，在打开的两个文件中分别执行
+:set fileencoding                //查看文件编码格式
+:set fileencoding=uft-8          //转换文件编码格式为utf-8
+:set fileformat=unix             //设置文件格式为unix
 ```
 
 ### 8）、多行注释：
