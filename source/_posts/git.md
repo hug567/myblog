@@ -1,4 +1,4 @@
-## 1、安装git：
+##  1、安装git：
 
 ```C
 sudo apt install git                                     //安装git
@@ -24,7 +24,7 @@ git log --author="Huang Xing" --pretty=tformat: --numstat | gawk \
 '{ add += $1: subs += $2: loc += $1 - $2} END \
 {printf "added lines: %s removed lines: %s total lines: %s\n", add, subs, loc }' -
 //查看详细commit信息
-git log --oneline
+git log --oneline --graph --pretty=format:'%C(yellow)%h %Cred[%an]%Creset %Cblue[%ad]%Creset %s %Cgreen(%cr)%Cred%d' --date=format:'%Y-%m-%d %H:%M:%S' -n 100
 ```
 
 ### 2.2、本地分支管理
@@ -72,4 +72,28 @@ git push origin HEAD:<newname>                           //提送至远端分支
 ### 2.4、commit操作
 
 ```C
+//----------合并至最近一次commit-------------------------------------------//
+git add <file>                                           //添加文件
+git commit -s --amend                                    //追加至最新commit
+//----------合并至指定commit----------------------------------------------//
+git add <file>                                           //添加文件
+git stash                                                //暂存
+git log --oneline                                        //查看指定commit的ID
+git rebase <ID>^ --interactive                           //移动HEAD至指定ccommit
+[Operate]: first 'pick' -> 'edit', Esc, :wq              //首行'pick'改为'edit'，保存并退出
+git stash pop                                            //取出暂存
+git add <file>                                           //添加文件
+git commit --amend                                       //追加至指定commit
+git rebase --continue                                    //移动HEAD至最新commit
+[Condition]: if there is conflict                        //如果有冲突
+    []: edit conflit file                                //解决冲突
+    git add <file>                                       //添加文件
+    git commit --amend                                   //追加至指定commit
+    git rebase --continue                                //移动HEAD至最新commit
+//----------回退至指定commit----------------------------------------------//
+
+
+
+
+
 ```
