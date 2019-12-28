@@ -240,6 +240,39 @@ Ctrl + T                         //(vim中)返回
 
 ```C
 //下载：[http://www.easycolor.cc/](http://www.easycolor.cc/)
-cd ~/.vim/colors                 //放入指定目录(molokai.vim)
-colorscheme molokai              //在~/.vimrc中设置
+cd ~/.vim/colors                                //放入指定目录(molokai.vim)
+colorscheme molokai                             //在~/.vimrc中设置
+```
+
+### 6、源码编译安装vim提供Python支持
+
+```c
+sudo apt-get install python-dev python3-dev libncurses5-dev
+
+sudo apt --purge remove vim                     //卸载vim
+git clone git@github.com:vim/vim.git            //下载vim源码
+cd vim/src                                      //进入源码目录
+make clean                                      //清除编译生成文件
+sudo mkdir /usr/local/vim                       //新建安装目录
+./configure \
+  --with-features=huge \
+  --enable-rubyinterp \
+  --enable-luainterp \
+  --enable-perlinterp \
+  --enable-multibyte \
+  --enable-cscope \
+  --prefix=/usr/local/vim/ \
+  --enable-pythoninterp \
+  --enable-python3interp \
+  --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu/ \
+  --with-python-config-dir=/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu/
+make                                            //编译
+sudo make install                               //安装
+
+
+
+
+
+
+
 ```
