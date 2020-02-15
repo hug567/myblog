@@ -24,3 +24,16 @@ find                                                     //查找文件
 grep
     grep -nr "string" .                                  //查找文件
 ```
+
+### 4、win10通过ftp与Linux传输文件：
+
+```c
+sudo vim /etc/vsftpd.conf                                //更改ftp配置
+/* 取消“#write_enable=YES”的注释，:wq */
+service vsftpd restart                                   //重启ftp服务
+/* win10命令行中： */
+ftp <ip>                                                 //与Linux链接
+get <file>                                               //从Linux下载文件
+put <file>                                               //上传文件至Linux
+?                                                        //查看ftp支持的命
+```
