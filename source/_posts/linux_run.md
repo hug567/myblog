@@ -3,52 +3,47 @@
 ### 1.1、下载arm-none-linux-gnueabi-gcc：
 
 ```c
+/* 下载arm-none-linux-gnueabi-gcc并解压： */
 wget https://armkeil.blob.core.windows.net/developer/Files/downloads/gnu-rm/9-2019q4/gcc-arm-none-eabi-9-2019-q4-major-aarch64-linux.tar.bz2
 /* 在~/.bashr和~/.zshrc中添加： */
 export PATH="$HOME/tools/arm-2014.05/bin:$PATH"
-source ~/.bashrc                                          //更新bash配置
-source ~/.zshrc                                           //更新zsh配置
-arm-none-linux-gnueabi-gcc --version                      //查看版本，验证路径设置正确
+source ~/.bashrc                                           //更新bash配置
+source ~/.zshrc                                            //更新zsh配置
+arm-none-linux-gnueabi-gcc --version                       //查看版本，验证路径设置正确
 ```
 
 ### 1.2、编译内核：
 
 ```c
 sudo apt-get install gcc qemu libncurses5-dev openssl libssl-dev build-essential \
-pkg-config libc6-dev bison flex libelf-dev                //安装依赖
-qemu-img --version                                        //查看qemu版本
+pkg-config libc6-dev bison flex libelf-dev                 //安装依赖
+qemu-img --version                                         //查看qemu版本
 
-cat /proc/version                                         //查看内核版本
+cat /proc/version                                          //查看内核版本
 //下载linux-4.15
 wget https://mirror.bjtu.edu.cn/kernel/linux/kernel/v4.x/linux-4.15.tar.gz
-tar -xvf linux-4.15.tar.gz                                //解压linux内核
-cd linux-4.15                                             //进入目录
-make clean; make mrproper
-
-//sudo make clean; sudo make mrproper                       //清楚编译临时文件
-//sudo cp /boot/config-4.15.0-54-generic .config            //复制配置文件
-//sudo make menuconfig                                      //配置
-//sudo make                                                 //编译
-
+tar -xvf linux-4.15.tar.gz                                 //解压linux内核
+cd linux-4.15                                              //进入目录
+make clean; make mrproper                                  //清除临时文件
 /* 配置及编译： */
 make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- vexpress_defconfig
 make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi-
 find ./ -name "*Image*"                                     //查看Image文件
 /* 无文件系统启动验证： */
-qemu-system-arm -M virt -cpu cortex-a15 -m 256 -kernel arch/arm/boot/zImage -nographic -append "console=ttyAMA0"
+qemu-system-arm -M virt -cpu cortex-a15 -m 256 \
+    -kernel arch/arm/boot/zImage -nographic -append "console=ttyAMA0"
 ```
 
 ### 1.3、编译busybox：
 
 ```c
-//下载busybox
-wget https://busybox.net/downloads/busybox-1.27.2.tar.bz2
-tar -xjvf busybox-1.27.2.tar.bz2  //解压busybox
-cd busybox-1.27.2  //进入目录
+wget https://busybox.net/downloads/busybox-1.27.2.tar.bz2       //下载busybox
+tar -xjvf busybox-1.27.2.tar.bz2                                //解压busybox
+cd busybox-1.27.2                                               //进入目录
 make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- menuconfig  //手动配置
 /* 进入第一行"Busybox Setting", 按Y选中"Build Busybox as a static binary" */
-make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- //编译
-make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- install //安装
+make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi-             //编译
+make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- install     //安装
 /* 所需内容在busybox-1.27.2/_install目录下 */
 ```
 
@@ -56,9 +51,9 @@ make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- install //安装
 
 ```c
 mkdir rootfs                                              //新建文件夹
-cd rootfs                                                 //
+cd rootfs                                                 //进入目录
 sudo cp -rf ../busybox-1.27.2/_install/* ./               //复制文件
-sudo mkdir proc sys dev etc etc/init.d                    //
+sudo mkdir proc sys dev etc etc/init.d                    //新建目录
 sudo vim ./etc/init.d/rcS                                 //新建文件并写入
 /*-------------------------------------------------------*/
 #!/bin/sh
@@ -67,7 +62,7 @@ mount -t sysfs none /sys
 /sbin/mdev -s
 /*-------------------------------------------------------*/
 sudo chmod a+x ./etc/init.d/rcS                           //添加可执行权限
-find . | cpio -o --format=newc > ../qemu_rootfs.img       //制作文件系统
+find . | cpio -o --format=newc > ../rootfs.img            //制作文件系统
 cd ..                                                     //返回上层目录
 gzip -c rootfs.img > rootfs.img.gz                        //压缩文件系统
 ```
