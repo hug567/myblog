@@ -114,9 +114,32 @@ sudo make install                                         //安装
 	ARM architecture, no vendor, creates binaries that run on the Linux operating system, and uses the GNU EABI，主要用于编译ARM架构的u-boot、Linux内核、Linux应用等，实用glibc库；
 ```
 
+## 3、编译u-boot：
+
+```c
+https://ftp.denx.de/pub/u-boot/                             //u-boot下载地址
+wget https://ftp.denx.de/pub/u-boot/u-boot-2014.01.tar.bz2  //下载u-boot
+tar -xjvf u-boot-2014.01.tar.bz2                            //解压u-boot
+cd u-boot-2014.01                                           //进入目录
+/* 配置与编译： */
+make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- vexpress_ca9x4_config
+make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi-
+/* 启动验证u-boot： */
+qemu-system-arm -M vexpress-a9 -m 256M -kernel ./u-boot -nographic
+
+sudo apt install uml-utilities bridge-utils                 //安装依赖
+sudo vim /etc/network/interfaces
+
+/* ubuntu添加虚拟网卡： */
+sudo apt install uml-utilities bridge-utils                 //安装依赖
+sudo ip tuntap add name virt mode tap                       //添加虚拟网卡virt
+sudo ifconfig virt 192.168.1.100 netmask 255.255.255.0      //配置虚拟网卡ip
+ip a                                                        //查看配置是否生效
 
 
-
+/* 编译内核通过u-boot引导： */
+make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- LOADADDR uImage
+```
 
 
 
