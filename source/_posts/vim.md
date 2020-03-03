@@ -139,6 +139,15 @@ x或d                             //按块删除
 ESC                              //退出
 ```
 
+### 9）、文件操作：
+
+```c
+:set ff                          //查看文件格式(dos/unix)
+:set ff=unix                     //设置文件格式为unix
+:set fileformat                  //查看文件格式(dos/unix)
+:set fileformat=unix             //设置文件格式为unix
+```
+
 ## 2、vim中使用正则表达式：
 
 ```C
