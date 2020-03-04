@@ -38,7 +38,7 @@ git branch dev                                           //切换本地分支
 git branch -d dev                                        //删除本地分支
 git branch -D dev                                        //强制删除本地分支
 git branch -m <newname>                                  //重命名当前分支
-git branch -b <newname>                                  //复制当前分支
+git branch -c <newname>                                  //复制当前分支
 //----------checkout-------------------------------------------------------//
 git checkout -b dev                                      //新建并切换分支
 git checkout dev                                         //新建本地分支
@@ -93,8 +93,8 @@ git rebase --continue                                    //移动HEAD至最新co
     git commit --amend                                   //追加至指定commit
     git rebase --continue                                //移动HEAD至最新commit
 //----------合并几个commit------------------------------------------------//
-git log --oneline    //查看最早需要合并的commit ID
-git rebase -i <ID>^  //定位至最早需要合并的commit
+git log --oneline                                        //查看最早需要合并的commit ID
+git rebase -i <ID>^                                      //定位至最早需要合并的commit
 /* 首行pick不动，下面需要被合并的commit将pick改为s，:wq */
 /* 修改commit message，若有冲突则解决冲去，:wq */
 //----------调整commit顺序------------------------------------------------//
