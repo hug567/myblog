@@ -5,6 +5,15 @@
   char ch;
   int strLen;
   ````
+* **函数名、结构名**：大驼峰
+  ```c
+  int Add(int x, int y);
+  struct Student {
+      char *name,
+      int class,
+      int age,
+  };
+  ````
 ## 2、语句
 ---
 - **if语句：**
