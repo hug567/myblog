@@ -141,27 +141,21 @@ ip a                                                        //查看配置是否
 make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- LOADADDR uImage
 ```
 
+```c
+主机创建tun/tap设备：
+sudo ip tuntap add name virt mode tap     //创建tap设备
+sudo ip tuntap add dev virt mode tap     //创建tap设备
+sudo ifconfig virt 192.168.0.100 netmask 255.255.255.0   //配置ip
+ip a  //查看tap设备
 
+sudo ip tuntap del dev virt mode tap  //删除tap设备
 
+ifconfig eth0 192.168.0.101 netmask 255.255.255.0 dstaddr 192.168.0.100
+ifconfig eth0 up
+ifconfig
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+编译内核时指定：
+make LOADADDR uImage
+make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- vexpress_defconfig
+make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- LOADADDR=0x60003000
+```
