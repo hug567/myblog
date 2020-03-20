@@ -253,16 +253,29 @@ cd ~/.vim/colors                                //放入指定目录(molokai.vim
 colorscheme molokai                             //在~/.vimrc中设置
 ```
 
-### 6、源码编译安装vim提供Python支持
+## 6、源码编译安装vim提供Python支持
 
 ```c
-sudo apt-get install python-dev python3-dev libncurses5-dev
-
+sudo apt-get install python-dev python3-dev libncurses5-dev xorg-dev  //安装依赖
+vim --version | grep python                     //查看vim对python的支持
 sudo apt --purge remove vim                     //卸载vim
 git clone git@github.com:vim/vim.git            //下载vim源码
 cd vim/src                                      //进入源码目录
 make clean                                      //清除编译生成文件
 sudo mkdir /usr/local/vim                       //新建安装目录
+./configure \
+  --with-features=huge \                        //支持最大特性
+  --enable-rubyinterp \                         //打开对ruby编写的插件的支持
+  --enable-luainterp \                          //打开对lua编写的插件的支持
+  --enable-perlinterp \                         //打开对perl编写的插件的支持
+  --enable-multibyte \                          //打开多字节支持，可输入中文
+  --enable-cscope \                             //打开对cscope的支持
+  --enable-pythoninterp \                       //打开对python编写的插件的支持
+  --enable-python3interp \                      //打开对python3编写的插件的支持
+  --prefix=/usr/local/vim/ \                    //安装目录
+  --with-x \
+  --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu/ \     //指定python路径
+  --with-python3-config-dir=/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu/  //指定python3路径
 ./configure \
   --with-features=huge \
   --enable-rubyinterp \
@@ -270,12 +283,17 @@ sudo mkdir /usr/local/vim                       //新建安装目录
   --enable-perlinterp \
   --enable-multibyte \
   --enable-cscope \
-  --prefix=/usr/local/vim/ \
   --enable-pythoninterp \
   --enable-python3interp \
+  --prefix=/usr/local/vim/ \
+  --with-x \
+  --with-xim \
+  --with-gnome \
+  --enable-gui=auto \
   --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu/ \
-  --with-python-config-dir=/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu/
+  --with-python3-config-dir=/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu/
 make                                            //编译
+./vim --version | grep python                   //查看对python的支持
 sudo make install                               //安装
 
 

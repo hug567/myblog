@@ -46,4 +46,6 @@ put <file>                                               //上传文件至Linux
 rar
     sudo apt install rar                                     //更改ftp配置
     rar x package.rar                                        //解压rar文件
+unzip
+    unzip package.zip                                        //解压zip文件
 ```
