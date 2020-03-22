@@ -261,8 +261,7 @@ vim --version | grep python                     //查看vim对python的支持
 sudo apt --purge remove vim                     //卸载vim
 git clone git@github.com:vim/vim.git            //下载vim源码
 cd vim/src                                      //进入源码目录
-make clean                                      //清除编译生成文件
-sudo mkdir /usr/local/vim                       //新建安装目录
+make clean; make distclean                      //清除编译生成文件
 ./configure \
   --with-features=huge \                        //支持最大特性
   --enable-rubyinterp \                         //打开对ruby编写的插件的支持
@@ -272,8 +271,9 @@ sudo mkdir /usr/local/vim                       //新建安装目录
   --enable-cscope \                             //打开对cscope的支持
   --enable-pythoninterp \                       //打开对python编写的插件的支持
   --enable-python3interp \                      //打开对python3编写的插件的支持
-  --prefix=/usr/local/vim/ \                    //安装目录
-  --with-x \
+  --prefix=/usr/local/ \                        //安装目录
+  --with-x \                                    //支持剪切板
+  --with-gnome \                                //?
   --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu/ \     //指定python路径
   --with-python3-config-dir=/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu/  //指定python3路径
 ./configure \
@@ -285,21 +285,28 @@ sudo mkdir /usr/local/vim                       //新建安装目录
   --enable-cscope \
   --enable-pythoninterp \
   --enable-python3interp \
-  --prefix=/usr/local/vim/ \
+  --prefix=/usr/local/ \
   --with-x \
-  --with-xim \
   --with-gnome \
   --enable-gui=auto \
   --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu/ \
   --with-python3-config-dir=/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu/
 make                                            //编译
+make reconfig                                   //当产生错误时
 ./vim --version | grep python                   //查看对python的支持
+./vim --version | grep clipboard                //查看对clipboard的支持
 sudo make install                               //安装
+sudo mv /usr/bin/vim /usr/bin/vim-bkp           //备份原vim
+vim --version | grep VIM                        //查看vim版本
+vim --version | grep python                     //查看python支持
+vim --version | grep clipboard                  //查看剪切板支持
+```
 
+## 7、安装YouCompleteMe：
 
-
-
-
-
+```c
+git clone git@github.com:ycm-core/YouCompleteMe.git    //下载YouCompleteMe源码
+cp YouCompleteMe ~/.vim/bundle/                        //复制到vim插件目录
+git submodule update --init --recursive                //
 
 ```

@@ -28,6 +28,8 @@ make clean; make mrproper                                  //清除临时文件
 /* 配置及编译： */
 make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- vexpress_defconfig
 make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi-
+make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- modules    //编译内核模块
+make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- dtbs       //编译dts文件
 find ./ -name "*Image*"                                     //查看Image文件
 /* 无文件系统启动验证： */
 qemu-system-arm -M virt -cpu cortex-a15 -m 256 \
@@ -135,27 +137,27 @@ sudo apt install uml-utilities bridge-utils                 //安装依赖
 sudo ip tuntap add name virt mode tap                       //添加虚拟网卡virt
 sudo ifconfig virt 192.168.1.100 netmask 255.255.255.0      //配置虚拟网卡ip
 ip a                                                        //查看配置是否生效
-
-
-/* 编译内核通过u-boot引导： */
-make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- LOADADDR uImage
 ```
 
 ```c
-主机创建tun/tap设备：
+/* 主机创建tun/tap设备： */
 sudo ip tuntap add name virt mode tap     //创建tap设备
 sudo ip tuntap add dev virt mode tap     //创建tap设备
 sudo ifconfig virt 192.168.0.100 netmask 255.255.255.0   //配置ip
 ip a  //查看tap设备
-
 sudo ip tuntap del dev virt mode tap  //删除tap设备
+/* 主机安装TFTP工具： */
+sudo apt install tftp-hpa tftpd-hpa xinetd    //安装依赖
+vim /etc/default/tftpd-hpa    //查看配置文件
+/var/lib/tftpboot             //拉取uImage目录
+sudo /etc/init.d/tftpd-hpa restart    //重启TFTP服务
 
 ifconfig eth0 192.168.0.101 netmask 255.255.255.0 dstaddr 192.168.0.100
 ifconfig eth0 up
 ifconfig
 
-编译内核时指定：
-make LOADADDR uImage
+sudo apt install u-boot-tools    //安装依赖
+/* 编译内核通过u-boot引导： */
 make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- vexpress_defconfig
-make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- LOADADDR=0x60003000
+make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- LOADADDR=0x60003000 uImage
 ```
