@@ -46,8 +46,20 @@ put <file>                                               //上传文件至Linux
 
 ```c
 rar
-    sudo apt install rar                                     //更改ftp配置
-    rar x package.rar                                        //解压rar文件
+    sudo apt install rar                                 //更改ftp配置
+    rar x package.rar                                    //解压rar文件
 unzip
-    unzip package.zip                                        //解压zip文件
+    unzip package.zip                                    //解压zip文件
+```
+
+## 6、ssh连接vm中的linux：
+
+```c
+/* 虚拟机Linux： */
+sudo apt install openssh-server                          //安装ssh服务端
+sudo /etc/init.d/ssh start                               //启动sshd
+ps -e | grep ssh                                         //查看sshd是否启动
+ip a                                                     //查看虚拟卡ip
+/* 主机win10中gitbash: */
+ssh hx@192.168.40.128                                    //连接虚拟机中Linux
 ```
