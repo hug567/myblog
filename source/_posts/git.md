@@ -56,6 +56,10 @@ git chechout <branch2>                                   //切换分支
 git stash pop                                            //取出暂存
 git stash drop stash@{0}                                 //删除stash第一个队列
 git stash clear                                          //清空stash所有内容
+
+git remote prune origin                        //删除远端已删除本地仍存在的分支
+git gc                                         //清理不必要的文件并优化本地存储库
+git prune                                      //从对象数据库中删除所有不可访问的对象
 ```
 
 ### 2.3、远端分支管理
@@ -79,11 +83,11 @@ git cherry-pick <commit-id>                              //挑选提交指定com
 git add <file>                                           //添加文件
 git commit --amend                                       //追加至最新commit
 //----------合并至指定commit----------------------------------------------//
-git add <file>                                           //添加文件
 git stash                                                //暂存
 git log --oneline                                        //查看指定commit的ID
 git rebase -i <ID>^                                      //移动HEAD至指定ccommit
-/* 首行pick改为e，保存并推出 */                              //编辑
+git rebase -i HEAD~5                                     //移动HEAD至指定ccommit
+/* 首行pick改为e，保存并推出 */                            //编辑
 git stash pop                                            //取出暂存
 git add <file>                                           //添加文件
 git commit --amend                                       //追加至指定commit
@@ -106,7 +110,7 @@ git rebase -i <ID>^                                      //定位至最早需要
 
 ```C
 //----------撤销更改------------------------------------------------------//
-git reset --mixed HRAD^                        //撤销最近一条commit，撤销add
+git reset --mixed HEAD^                        //撤销最近一条commit，撤销add
 git reset --soft HEAD                          //撤销最近一条commit，不撤销add
 git reset --hard HEAD~1                        //删除最近一条commit
 git reset HAED                                 //撤销所有文件add
