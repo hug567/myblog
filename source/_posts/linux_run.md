@@ -141,11 +141,11 @@ ip a                                                        //查看配置是否
 
 ```c
 /* 主机创建tun/tap设备： */
-sudo ip tuntap add name virt mode tap     //创建tap设备
-sudo ip tuntap add dev virt mode tap     //创建tap设备
-sudo ifconfig virt 192.168.0.100 netmask 255.255.255.0   //配置ip
+sudo ip tuntap add name tap0 mode tap     //创建tap设备
+sudo ip tuntap add dev tap0 mode tap     //创建tap设备
+sudo ifconfig tap0 192.168.0.100 netmask 255.255.255.0   //配置ip
 ip a  //查看tap设备
-sudo ip tuntap del dev virt mode tap  //删除tap设备
+sudo ip tuntap del dev tap0 mode tap  //删除tap设备
 /* 主机安装TFTP工具： */
 sudo apt install tftp-hpa tftpd-hpa xinetd    //安装依赖
 vim /etc/default/tftpd-hpa    //查看配置文件
@@ -156,8 +156,19 @@ ifconfig eth0 192.168.0.101 netmask 255.255.255.0 dstaddr 192.168.0.100
 ifconfig eth0 up
 ifconfig
 
-sudo apt install u-boot-tools    //安装依赖
+sudo apt install u-boot-tools    //安装mkimage工具
 /* 编译内核通过u-boot引导： */
 make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- vexpress_defconfig
 make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- LOADADDR=0x60003000 uImage
+make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- modules    //编译内核模块
+make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- dtbs       //编译dts文件
+
+/* 主机安装TFTP： */
+sudo apt install tftp-hpa tftpd-hpa xinetd
+sudo vim /etc/default/tftpd-hpa    //tftp配置文件
+sudo /etc/init.d/tftpd-hpa restaet    //更改tptp配置后重启服务
+
+sudo cp uImage /var/lib/tftproot
+sudo cp u-boot /var/lib/tftproot
+sudo cp vexpress-v2p-ca9.dtb /var/lib/tftproot
 ```
