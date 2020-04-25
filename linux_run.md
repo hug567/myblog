@@ -62,6 +62,7 @@ sudo vim ./etc/init.d/rcS                                 //新建文件并写�
 mount -t proc none /proc
 mount -t sysfs none /sys
 /sbin/mdev -s
+sudo echo -e "#\!/bin/bash\nmount -t proc none /proc\nmount -t sysfs none /sys\n/sbin/mdev -s" ./etc/init.d/rcS
 /*-------------------------------------------------------*/
 sudo chmod a+x ./etc/init.d/rcS                           //添加可执行权限
 find . | cpio -o --format=newc > ../rootfs.img            //制作文件系统
