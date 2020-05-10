@@ -70,6 +70,32 @@ cd ..                                                     //返回上层目录
 gzip -c rootfs.img > rootfs.img.gz                        //压缩文件系统
 ```
 
+```c
+/* 制作从sd卡启动的根文件系统： */
+mkdir rootfs
+cd rootfs
+sudo cp -r ../busybox-1.27.2/_install/* .
+sudo mkdir lib
+sudo cp -r ~/tools/arm-2014.05/arm-none-linux-gnueabi/libc/lib/* lib/
+mkdir dev
+cd dev
+sudo mknod -m 666 tty1 c 4 1
+sudo mknod -m 666 tty2 c 4 2
+sudo mknod -m 666 tty3 c 4 3
+sudo mknod -m 666 tty4 c 4 4
+sudo mknod -m 666 console c 5 1
+sudo mknod -m 666 null c 1 3
+cd ../../
+dd if=/dev/zero of=rootfs.ext3 bs=1M count=32
+mkfs.ext3 rootfs.ext3
+sudo mount -t ext3 rootfs.ext3 /mnt -o loop
+sudo cp -r rootfs/* /mnt
+sudo umount /mnt
+~/code/mylib/linux/shell/run-qemu-arm-sd.sh
+```
+
+
+
 ### 1.5、运行kernel：
 
 ```c
@@ -142,16 +168,21 @@ ip a                                                        //查看配置是否
 
 ```c
 /* 主机创建tun/tap设备： */
-sudo ip tuntap add name tap0 mode tap     //创建tap设备
-sudo ip tuntap add dev tap0 mode tap     //创建tap设备
+sudo ip tuntap add name tap0 mode tap                    //创建tap设备
+sudo ip tuntap add dev tap0 mode tap                     //创建tap设备
 sudo ifconfig tap0 192.168.0.100 netmask 255.255.255.0   //配置ip
-ip a  //查看tap设备
-sudo ip tuntap del dev tap0 mode tap  //删除tap设备
+ip a                                                     //查看tap设备
+sudo ip tuntap del dev tap0 mode tap                     //删除tap设备
 /* 主机安装TFTP工具： */
-sudo apt install tftp-hpa tftpd-hpa xinetd    //安装依赖
-vim /etc/default/tftpd-hpa    //查看配置文件
-/var/lib/tftpboot             //拉取uImage目录
-sudo /etc/init.d/tftpd-hpa restart    //重启TFTP服务
+sudo apt install tftp-hpa tftpd-hpa xinetd               //安装依赖
+vim /etc/default/tftpd-hpa                               //查看配置文件
+/var/lib/tftpboot                                        //拉取uImage目录
+sudo /etc/init.d/tftpd-hpa restart                       //重启TFTP服务
+/* tftp测试： */
+tftp localhost / 192.168.0.100                           //连接至本地
+get <file>                                               //获取文件
+status                                                   //查看状态
+quit                                                     //推出tftp服务
 
 ifconfig eth0 192.168.0.101 netmask 255.255.255.0 dstaddr 192.168.0.100
 ifconfig eth0 up
@@ -167,9 +198,33 @@ make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- dtbs       //编译dts文件
 /* 主机安装TFTP： */
 sudo apt install tftp-hpa tftpd-hpa xinetd
 sudo vim /etc/default/tftpd-hpa    //tftp配置文件
-sudo /etc/init.d/tftpd-hpa restaet    //更改tptp配置后重启服务
+sudo /etc/init.d/tftpd-hpa restart    //更改tptp配置后重启服务
 
 sudo cp uImage /var/lib/tftproot
 sudo cp u-boot /var/lib/tftproot
 sudo cp vexpress-v2p-ca9.dtb /var/lib/tftproot
+```
+
+#### u-boot手动启动linux内核：
+```c
+qemu-system-arm -M vexpress-a9 \
+    -kernel u-boot \
+    -nographic \
+    -initrd /home/ubuntu/code/linux/rootfs.img.gz \
+    -net nic -net tap,ifname=tap0 \
+    -m 512M
+
+/* 手动启动uImage */
+setenv etnaddr 11:22:33:44:55:66                         //设置板子的mac地址
+setenv ipaddr 192.168.0.101                              //设置板子的IP地址
+setenv serverip 192.168.0.100                            //设置提供内核下载的服务器IP地址
+setenv gatewayip 192.168.0.1                             //设置网关
+setenv netmask 255.255.255.0                             //设置子网掩码
+setenv bootargs "root=/dev/mtdblock0 console=ttyAMA0"    //设置启动参数
+saveenv                                                  //保存环境变量
+tftp 60003000 uImage                                     //下载Image
+tftp 60500000 vexpress-v2p-ca9.dtb                       //下载dtb
+bootm 0x60003000 - 0x60500000                            //启动内核
+
+setenv bootargs "root=/dev/mtdblock0 rdinit=sbin/init console=ttyAMA0 noapic"
 ```
