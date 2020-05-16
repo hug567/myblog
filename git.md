@@ -19,12 +19,20 @@ git log --name-status                                    //log显示修改文件
 git show                                                 //查看最新commit详细修改
 git show <commitID>                                      //查看指定commit详细修改
 git show <commitID> <filename>                           //查看指定commit中某个文件详细修改
-//统计提交代码
+/* 统计提交代码 */
 git log --author="Huang Xing" --pretty=tformat: --numstat | gawk \
 '{ add += $1: subs += $2: loc += $1 - $2} END \
 {printf "added lines: %s removed lines: %s total lines: %s\n", add, subs, loc }' -
-//查看详细commit信息
+/* 查看详细commit信息 */
 git log --oneline --graph --pretty=format:'%C(yellow)%h %Cred[%an]%Creset %Cblue[%ad]%Creset %s %Cgreen(%cr)%Cred%d' --date=format:'%Y-%m-%d %H:%M:%S' -n 100
+/* 指定文件最近一次提交时间 */
+git log --pretty=format:"%cd" --date=format:"%Y-%m-%d %H:%M:%S" -1 main.c
+/* 指定文件最早一次提交时间 */
+git log --pretty=format:"%cd" --date=format:"%Y-%m-%d %H:%M:%S" main.c | tail -1
+/* 指定文件最近一次提交年份 */
+git log --pretty=format:"%cd" --date=format:"%Y" -1 main.c
+/* 指定文件倒序提交时间 */
+git log --pretty=format:"%cd" --date=format:"%Y-%m-%d %H:%M:%S" --reverse main.c
 ```
 
 ### 2.2、本地分支管理
@@ -135,4 +143,3 @@ git clean -fdx                                 //删除未追踪与.gitignore忽
 .gitignore                                     //会被提交至git仓库
 .git/info/exclude                              //本地设置，不会被提交至git仓库
 ```
-
