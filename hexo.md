@@ -28,10 +28,10 @@ hexo -v                                                  //查看hexo版本
 ### nginx操作
 
 ```C
-sudo nginx                                               //启动nginx，浏览器输入IP访问
+sudo apt install nginx                                   //安装nginx
+sudo nginx -t                                            //验证nginx安装
 sudo vim /etc/nginx/sites-enabled/default                //编辑配置文件
-root /home/ubuntu/code/myblog/public;                    //43行修改为
-
+root /home/ubuntu/code/myblog/public;                    //设置网站根目录
 sudo service nginx start                                 //启动Ngnix
 sudo service nginx stop                                  //停止Ngnix
 sudo service nginx restart                               //重启Ngnix
